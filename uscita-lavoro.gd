@@ -16,6 +16,6 @@ func _on_body_entered(body):
 func cambia_scena():
 	# Se hai messo il file nella casella, carica la scena
 	if livello_successivo:
-		Transizione2.cambia_scena("res://livello2.tscn")
+		Transizione.cambia_scena("res://livello2.tscn")
 	else:
-		print("ERRORE: Hai dimenticato di inserire il Livello 3 nell'Inspector!")
+		print("ERRORE: Hai dimenticato di inserire il Livello 2 nell'Inspector!")

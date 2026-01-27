@@ -10,7 +10,7 @@ func _ready():
 func _on_body_entered(body):
 	# Se chi entra è il Player...
 	if body.name == "Player":
-		print("Cambio livello!")
+		print("Cambio livello! USICITA LIVELLO")
 		call_deferred("cambia_scena")
 
 func cambia_scena():

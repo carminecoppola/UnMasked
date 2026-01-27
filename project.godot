@@ -19,6 +19,7 @@ config/icon="res://foto/icon.svg"
 
 Global="*res://Global.gd"
 Transizione="*res://Transizione.tscn"
+Transizione2="*res://Transizione2.tscn"
 
 [display]
 
