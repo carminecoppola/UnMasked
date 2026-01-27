@@ -19,8 +19,16 @@ func cambia_scena(percorso_nuova_scena):
 	await get_tree().create_timer(1.0).timeout
 	
 	# 4. CAMBIO SCENA (Mentre c'è la foto o il nero)
-	# Carichiamo il livello "dietro le quinte"
+	# 4. CAMBIO SCENA
 	get_tree().change_scene_to_file(percorso_nuova_scena)
+
+# aspetta un frame per permettere a Godot di caricare la scena
+	await get_tree().process_frame
+
+# prova a trovare VignetteLayer nella nuova scena e avviala
+	var scena = get_tree().current_scene
+	if scena and scena.has_node("VignetteLayer"):
+		scena.get_node("VignetteLayer").start()
 	
 	# 5. FADE OUT FOTO (La foto sparisce dolcemente)
 	var tween_uscita = create_tween()
