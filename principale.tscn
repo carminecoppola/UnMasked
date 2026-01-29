@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dnkpwnaasy2ku"]
+[gd_scene load_steps=26 format=3 uid="uid://dnkpwnaasy2ku"]
 
 [ext_resource type="PackedScene" uid="uid://bkiqkxqrlnr8x" path="res://player.tscn" id="1_41ae2"]
 [ext_resource type="Script" uid="uid://calytq27060mv" path="res://main.gd" id="1_s7sie"]
@@ -14,6 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://dw23h73eapdl0" path="res://foto/dialoghi/Work/NPC-2/lavoratore-answ.png" id="12_3bw8a"]
 [ext_resource type="Texture2D" uid="uid://cr70psggy5emv" path="res://foto/dialoghi/Work/NPC-2/lavoratore-1.png" id="12_xl1dm"]
 [ext_resource type="Texture2D" uid="uid://dgnp8hv1pqoia" path="res://foto/dialoghi/Work/NPC-2/lavoratore-2.png" id="13_3bw8a"]
+[ext_resource type="PackedScene" uid="uid://did3cx3g72gkp" path="res://npc_complete.tscn" id="15_t7ekq"]
+[ext_resource type="Texture2D" uid="uid://c8npt7jo6aw7v" path="res://foto/dialoghi/Work/Work-Victory/lavoratore.png" id="16_6ila2"]
+[ext_resource type="Texture2D" uid="uid://cmoit62a5gry6" path="res://foto/dialoghi/Work/Work-Victory/lavoratore-1.png" id="17_t7ekq"]
+[ext_resource type="Texture2D" uid="uid://byk5ly11bsewc" path="res://foto/dialoghi/Work/Work-Victory/Group 1.png" id="18_t7ekq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_41ae2"]
 
@@ -160,3 +164,10 @@ npc_answers = ExtResource("12_3bw8a")
 correct_key = 3
 npc_correct = ExtResource("12_xl1dm")
 npc_wrong = ExtResource("13_3bw8a")
+
+[node name="NPC-Complete" parent="." groups=["npc_complete"] instance=ExtResource("15_t7ekq")]
+visible = false
+position = Vector2(1066, 389)
+complete_1 = ExtResource("16_6ila2")
+complete_2 = ExtResource("17_t7ekq")
+complete_3 = ExtResource("18_t7ekq")

@@ -91,6 +91,11 @@ func _on_dialogo_finito():
 	if stage == "final":
 		emit_signal("npc_finished")
 		queue_free()
+		var npc_complete = get_tree().get_first_node_in_group("npc_complete")
+		if npc_complete:
+			npc_complete.visible = true
+
+
 
 
 func _on_body_entered(body):

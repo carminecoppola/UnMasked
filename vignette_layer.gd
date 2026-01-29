@@ -1,6 +1,10 @@
 class_name VignetteLayer
 extends CanvasLayer
 
+@export var fade_time := 0.25  # durata dissolvenza
+var tween: Tween
+
+
 signal dialogue_finished
 signal choice_selected(choice_number: int) # 1,2,3
 
@@ -29,6 +33,9 @@ func _ready():
 	hide()
 	left_rect.hide()
 	right_rect.hide()
+	left_rect.modulate.a = 1.0
+	right_rect.modulate.a = 1.0
+
 
 
 func start():
@@ -77,17 +84,35 @@ func _next():
 
 
 func _show(v: Vignetta):
-	left_rect.hide()
-	right_rect.hide()
+	var rect_to_use: TextureRect
+	var rect_to_hide: TextureRect
 
 	if v.side == "left":
-		left_rect.texture = v.texture
-		left_rect.show()
+		rect_to_use = left_rect
+		rect_to_hide = right_rect
 	else:
-		right_rect.texture = v.texture
-		right_rect.show()
+		rect_to_use = right_rect
+		rect_to_hide = left_rect
 
-	# ✅ scelta attiva IMMEDIATAMENTE quando arrivi alla vignetta indovinello
+	# ferma tween precedente
+	if tween:
+		tween.kill()
+
+	tween = create_tween()
+
+	# FADE OUT dell'altro lato se visibile
+	if rect_to_hide.visible:
+		tween.tween_property(rect_to_hide, "modulate:a", 0.0, fade_time)
+		tween.tween_callback(rect_to_hide.hide)
+
+	# prepara nuova vignetta
+	rect_to_use.texture = v.texture
+	rect_to_use.modulate.a = 0.0
+	rect_to_use.show()
+
+	# FADE IN
+	tween.tween_property(rect_to_use, "modulate:a", 1.0, fade_time)
+
 	awaiting_choice = (index == choice_at_index)
 
 
@@ -95,8 +120,26 @@ func finish():
 	attivo = false
 	awaiting_choice = false
 	Global.in_dialogue = false
+
+	if tween:
+		tween.kill()
+
+	tween = create_tween()
+
+	if left_rect.visible:
+		tween.tween_property(left_rect, "modulate:a", 0.0, fade_time)
+	if right_rect.visible:
+		tween.tween_property(right_rect, "modulate:a", 0.0, fade_time)
+
+	tween.tween_callback(_hide_all)
+
+	choice_at_index = -1
+	emit_signal("dialogue_finished")
+
+
+func _hide_all():
 	hide()
 	left_rect.hide()
 	right_rect.hide()
-	choice_at_index = -1
-	emit_signal("dialogue_finished")
+	left_rect.modulate.a = 1.0
+	right_rect.modulate.a = 1.0
