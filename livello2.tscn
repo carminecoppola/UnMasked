@@ -1,9 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://4oe32qvdyxk7"]
+[gd_scene load_steps=27 format=3 uid="uid://4oe32qvdyxk7"]
 
 [ext_resource type="Texture2D" uid="uid://cpxhinx4b5os0" path="res://foto/image 4.png" id="1_64d67"]
 [ext_resource type="PackedScene" uid="uid://b8s66cm7s8uk4" path="res://uomo_ricco.tscn" id="2_64d67"]
 [ext_resource type="Script" uid="uid://cx2js31vb6sr6" path="res://porta.gd" id="3_26bjb"]
 [ext_resource type="Script" uid="uid://bbc0rkhbscyj4" path="res://uscita.gd" id="4_64d67"]
+[ext_resource type="PackedScene" uid="uid://cobnafej8dvum" path="res://vignette_layer.tscn" id="5_w4621"]
+[ext_resource type="PackedScene" uid="uid://cnojrl7punlrn" path="res://npc-vip1.tscn" id="6_w4621"]
+[ext_resource type="PackedScene" uid="uid://bewjxogrl4olr" path="res://npc-vip2.tscn" id="7_n6kms"]
+[ext_resource type="Texture2D" uid="uid://dwy0j4nmootsh" path="res://foto/dialoghi/VIP/NPC2/lavoratore-3.png" id="8_kfkwk"]
+[ext_resource type="Script" uid="uid://bwxsvir8hmf6w" path="res://npc_vip_2.gd" id="8_tc4uy"]
+[ext_resource type="Texture2D" uid="uid://dvahgpbrcpgbv" path="res://foto/dialoghi/VIP/NPC2/lavoratore-4.png" id="9_ogr41"]
+[ext_resource type="Texture2D" uid="uid://clikqrktk14n6" path="res://foto/dialoghi/VIP/NPC2/lavoratore.png" id="10_3e868"]
+[ext_resource type="Texture2D" uid="uid://fftagyi0uljx" path="res://foto/dialoghi/VIP/NPC2/lavoratore-1.png" id="11_dmybj"]
+[ext_resource type="Texture2D" uid="uid://dder137lrkqsk" path="res://foto/dialoghi/VIP/NPC2/lavoratore-2.png" id="12_6y4b0"]
+[ext_resource type="PackedScene" uid="uid://bsv5r0uo2llvg" path="res://npc_vip_complete.tscn" id="14_dmybj"]
+[ext_resource type="Script" uid="uid://cc84cabey1om8" path="res://npc_vip_complete.gd" id="15_6y4b0"]
+[ext_resource type="Texture2D" uid="uid://gqcoeyvyprh7" path="res://foto/dialoghi/VIP/NPC-CompleteVIP/lavoratore.png" id="16_hbldq"]
+[ext_resource type="Texture2D" uid="uid://ccklcqbml5lck" path="res://foto/dialoghi/VIP/NPC-CompleteVIP/Giocatore2.png" id="17_0stda"]
+[ext_resource type="Texture2D" uid="uid://bxhl7avvtdvvb" path="res://foto/dialoghi/VIP/NPC-CompleteVIP/lavoratore-1.png" id="18_gacdo"]
+[ext_resource type="Texture2D" uid="uid://4befoe4etjt8" path="res://foto/dialoghi/VIP/NPC-CompleteVIP/lavoratore-2.png" id="19_m8nmb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_41ae2"]
 
@@ -98,8 +113,8 @@ offset_right = 1935.0
 offset_bottom = 691.0
 color = Color(1, 0, 0, 1)
 
-[node name="UomoRicco" parent="." instance=ExtResource("2_64d67")]
-position = Vector2(-449, -59)
+[node name="UomoRicco" parent="." groups=["player"] instance=ExtResource("2_64d67")]
+position = Vector2(130, 562)
 
 [node name="Porta" type="StaticBody2D" parent="."]
 position = Vector2(-11, 0)
@@ -132,3 +147,26 @@ livello_successivo = "uid://4oe32qvdyxk7"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UscitaLavoro"]
 position = Vector2(1390, 577.25)
 shape = SubResource("RectangleShape2D_wcxb6")
+
+[node name="VignetteLayer" parent="." instance=ExtResource("5_w4621")]
+
+[node name="NPC-VIP-1" parent="." instance=ExtResource("6_w4621")]
+position = Vector2(405, 394)
+
+[node name="NPC-VIP-2" parent="." groups=["npc-vip-2", "npc_vip_2"] instance=ExtResource("7_n6kms")]
+position = Vector2(731, 400)
+script = ExtResource("8_tc4uy")
+npc_intro = ExtResource("8_kfkwk")
+npc_riddle = ExtResource("9_ogr41")
+npc_answers = ExtResource("10_3e868")
+correct_key = 3
+npc_correct = ExtResource("11_dmybj")
+npc_wrong = ExtResource("12_6y4b0")
+
+[node name="NPC-VIP-Complete" parent="." instance=ExtResource("14_dmybj")]
+position = Vector2(1060, 402)
+script = ExtResource("15_6y4b0")
+npc_dialogue_1 = ExtResource("16_hbldq")
+player_reply = ExtResource("17_0stda")
+npc_dialogue_2 = ExtResource("18_gacdo")
+npc_dialogue_3 = ExtResource("19_m8nmb")

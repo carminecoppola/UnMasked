@@ -1,20 +1,15 @@
 [gd_scene load_steps=7 format=3 uid="uid://b8s66cm7s8uk4"]
 
 [ext_resource type="Script" uid="uid://tfyntrbnb43q" path="res://player_ricco.gd" id="1_4a7ct"]
-[ext_resource type="Texture2D" uid="uid://dnbm51rt8nfc7" path="res://foto/image 37.png" id="1_ptfgl"]
-[ext_resource type="Texture2D" uid="uid://dewks8afcvgxb" path="res://foto/image 32.png" id="2_4a7ct"]
-[ext_resource type="Texture2D" uid="uid://d1gxqnx300csp" path="res://foto/image 33.png" id="3_ma1hb"]
+[ext_resource type="Texture2D" uid="uid://b8gkcu6fpcyan" path="res://foto/personaggi/player-vip/image 43.png" id="2_4a7ct"]
+[ext_resource type="Texture2D" uid="uid://5q3ceoqt1cvt" path="res://foto/personaggi/player-vip/image 32.png" id="3_ma1hb"]
+[ext_resource type="Texture2D" uid="uid://bf8otumnux6dy" path="res://foto/personaggi/player-vip/image 33.png" id="4_73ctr"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mvljk"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4a7ct"]
 animations = [{
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_ptfgl")
+"texture": ExtResource("2_4a7ct")
 }],
 "loop": true,
 "name": &"idle_ricchione",
@@ -22,33 +17,33 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_ma1hb")
+}, {
+"duration": 1.0,
 "texture": ExtResource("2_4a7ct")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_ptfgl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_ma1hb")
+"texture": ExtResource("4_73ctr")
 }],
 "loop": true,
 "name": &"walk_uomo_ricco",
-"speed": 8.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7ct"]
-size = Vector2(147, 261)
+size = Vector2(157.5, 274.5)
 
 [node name="UomoRicco" type="CharacterBody2D"]
 script = ExtResource("1_4a7ct")
 
 [node name="AnimUomoRicco" type="AnimatedSprite2D" parent="."]
-position = Vector2(676.55005, 583.5)
-scale = Vector2(0.3191668, 0.36886397)
-sprite_frames = SubResource("SpriteFrames_mvljk")
+position = Vector2(9.274986, 4.2499957)
+scale = Vector2(0.37069452, 0.3807854)
+sprite_frames = SubResource("SpriteFrames_4a7ct")
 animation = &"idle_ricchione"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(682.5, 582.5)
+position = Vector2(5.25, 6.75)
 shape = SubResource("RectangleShape2D_4a7ct")
 
 [node name="NomeUomoRicco" type="Label" parent="."]

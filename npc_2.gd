@@ -77,23 +77,34 @@ func _on_choice_selected(choice_number: int):
 	if choice_number == correct_key:
 		if npc_correct:
 			finale.append(VignetteLayer.Vignetta.new(npc_correct, "right"))
+		stage = "final"
 	else:
 		if npc_wrong:
 			finale.append(VignetteLayer.Vignetta.new(npc_wrong, "right"))
+		stage = "wrong"
 
 	layer.choice_at_index = -1
 	layer.vignette = finale
-	stage = "final"
 	layer.start()
 
 
+
 func _on_dialogo_finito():
+	if stage == "wrong":
+		_restart_choice()
+		return
+
 	if stage == "final":
+		# ✅ sblocca NPC-Complete
+		var npc_complete = get_tree().current_scene.get_node_or_null("NPC-Complete")
+		if npc_complete:
+			if npc_complete.has_method("activate"):
+				npc_complete.call("activate")
+			else:
+				npc_complete.visible = true  # fallback (se non hai activate)
+
 		emit_signal("npc_finished")
 		queue_free()
-		var npc_complete = get_tree().get_first_node_in_group("npc_complete")
-		if npc_complete:
-			npc_complete.visible = true
 
 
 
@@ -111,3 +122,13 @@ func _on_body_exited(body):
 		player_in_range = false
 		if hint:
 			hint.visible = false
+			
+func _restart_choice():
+	var seq: Array[VignetteLayer.Vignetta] = []
+	if npc_answers:
+		seq.append(VignetteLayer.Vignetta.new(npc_answers, "right"))
+
+	layer.vignette = seq
+	layer.choice_at_index = 0
+	stage = "main"
+	layer.start()
