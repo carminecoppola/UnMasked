@@ -2,20 +2,21 @@ extends Node2D
 
 signal npc_finished
 
+
 @export var npc_intro: Texture2D
-@export var npc_riddle: Texture2D
-@export var npc_answers: Texture2D
-@export var correct_key := 2
+@export var player_intro_reply: Texture2D
+@export var npc_riddle_block: Array[Texture2D] = []  # 3 vignette (ultima = indovinello)
+
+@export var correct_key := 2  # ✅ 1,2,3 (tu vuoi 2)
 @export var npc_correct: Texture2D
 @export var npc_wrong: Texture2D
+
 @export var tasto_interazione := "interact"
 
 var player_in_range := false
 var gia_parlato := false
-var stage := "main"  # main / wrong / final
-var active := false
+var stage := "main"  # main / final
 
-@onready var visual: Node = get_node_or_null("Visual")
 @onready var hint: Label = get_node_or_null("Visual/Label")
 @onready var area: Area2D = $Area2D
 
@@ -23,45 +24,20 @@ var layer: VignetteLayer
 
 
 func _ready():
-	# 🔒 parte nascosto e disattivato
-	active = false
-	set_process(false)
-
-	if visual:
-		visual.visible = false
-	if hint:
-		hint.visible = false
-
+	if hint: hint.visible = false
 	area.body_entered.connect(_on_body_entered)
 	area.body_exited.connect(_on_body_exited)
 
 
-func activate():
-	# 🔓 chiamata da VIP-1
-	active = true
-	gia_parlato = false
-	player_in_range = false
-	stage = "main"
-	set_process(true)
-
-	if visual:
-		visual.visible = true
-	if hint:
-		hint.visible = false
-
-
 func _process(_delta):
-	if not active:
-		return
 	if Global.in_dialogue or gia_parlato:
 		return
-
 	if player_in_range and Input.is_action_just_pressed(tasto_interazione):
 		_start_dialogo()
 
 
 func _start_dialogo():
-	layer = get_tree().current_scene.get_node_or_null("VignetteLayer") as VignetteLayer
+	layer = get_tree().current_scene.get_node("VignetteLayer") as VignetteLayer
 	if layer == null:
 		push_error("VignetteLayer non trovato!")
 		return
@@ -72,20 +48,24 @@ func _start_dialogo():
 		layer.connect("choice_selected", Callable(self, "_on_choice_selected"))
 
 	var seq: Array[VignetteLayer.Vignetta] = []
+
 	if npc_intro:
 		seq.append(VignetteLayer.Vignetta.new(npc_intro, "right"))
-	if npc_riddle:
-		seq.append(VignetteLayer.Vignetta.new(npc_riddle, "right"))
-	if npc_answers:
-		seq.append(VignetteLayer.Vignetta.new(npc_answers, "right"))
+	if player_intro_reply:
+		seq.append(VignetteLayer.Vignetta.new(player_intro_reply, "left"))
+
+	for tex in npc_riddle_block:
+		if tex:
+			seq.append(VignetteLayer.Vignetta.new(tex, "right"))
 
 	layer.vignette = seq
+
+	# ✅ indovinello = ultima vignetta del blocco
 	layer.choice_at_index = seq.size() - 1
 
 	stage = "main"
 	gia_parlato = true
-	if hint:
-		hint.visible = false
+	if hint: hint.visible = false
 
 	layer.start()
 
@@ -107,24 +87,18 @@ func _on_choice_selected(choice_number: int):
 	layer.start()
 
 
+
 func _on_dialogo_finito():
 	if stage == "wrong":
 		_restart_choice()
 		return
 
 	if stage == "final":
-		var complete = get_tree().current_scene.get_node_or_null("NPC-VIP-Complete")
-		if complete and complete.has_method("activate"):
-			complete.activate()
-
 		emit_signal("npc_finished")
 		queue_free()
 
 
-
 func _on_body_entered(body):
-	if not active:
-		return
 	if body.is_in_group("player") and not gia_parlato:
 		player_in_range = true
 		if hint:
@@ -133,18 +107,21 @@ func _on_body_entered(body):
 
 
 func _on_body_exited(body):
-	if not active:
-		return
 	if body.is_in_group("player"):
 		player_in_range = false
 		if hint:
 			hint.visible = false
 			
-			
 func _restart_choice():
+	if npc_riddle_block.is_empty():
+		push_error("npc-work1: npc_riddle_block vuoto, non posso ripetere l'indovinello.")
+		return
+
+	var indovinello_tex: Texture2D = npc_riddle_block[npc_riddle_block.size() - 1]
+
 	var seq: Array[VignetteLayer.Vignetta] = []
-	if npc_answers:
-		seq.append(VignetteLayer.Vignetta.new(npc_answers, "right"))
+	if indovinello_tex:
+		seq.append(VignetteLayer.Vignetta.new(indovinello_tex, "right"))
 
 	layer.vignette = seq
 	layer.choice_at_index = 0

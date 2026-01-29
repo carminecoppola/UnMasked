@@ -10,6 +10,8 @@ extends Node2D
 var player_in_range := false
 var gia_parlato := false
 var stage := "main"  # main / final
+var active := false
+
 
 @onready var hint: Label = get_node_or_null("Visual/Label")
 @onready var area: Area2D = $Area2D
@@ -18,17 +20,42 @@ var layer: VignetteLayer
 
 
 func _ready():
+	active = false
+	set_process(false)
+
 	if hint:
 		hint.visible = false
+
+	# nascondi grafica iniziale
+	if has_node("Visual"):
+		$Visual.visible = false
+
 	area.body_entered.connect(_on_body_entered)
 	area.body_exited.connect(_on_body_exited)
 
 
+func activate():
+	active = true
+	gia_parlato = false
+	player_in_range = false
+	stage = "main"
+
+	set_process(true)
+
+	if has_node("Visual"):
+		$Visual.visible = true
+	if hint:
+		hint.visible = false
+
 func _process(_delta):
+	if not active:
+		return
+
 	if Global.in_dialogue or gia_parlato:
 		return
 	if player_in_range and Input.is_action_just_pressed(tasto_interazione):
 		_start_dialogo()
+
 
 
 func _start_dialogo():
@@ -70,6 +97,11 @@ func _on_dialogo_finito():
 	if stage != "final":
 		return
 
+	# ✅ sblocca la porta finale
+	var door = get_tree().current_scene.get_node_or_null("DoorFinale")
+	if door and door.has_method("unlock"):
+		door.unlock()
+
 	# pulizia connessione
 	if layer and layer.is_connected("dialogue_finished", Callable(self, "_on_dialogo_finito")):
 		layer.disconnect("dialogue_finished", Callable(self, "_on_dialogo_finito"))
@@ -78,6 +110,9 @@ func _on_dialogo_finito():
 
 
 func _on_body_entered(body):
+	if not active:
+		return
+
 	if body.is_in_group("player") and not gia_parlato:
 		player_in_range = true
 		if hint:

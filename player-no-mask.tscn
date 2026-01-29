@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh1onwxmh546s"]
+
+[ext_resource type="Script" uid="uid://po667xsie20o" path="res://player_no_mask.gd" id="1_c1ry6"]
+[ext_resource type="Texture2D" uid="uid://bny2g2sw6g53o" path="res://foto/personaggi/final-player.png" id="2_ec3xn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(173.125, 283.25)
+
+[sub_resource type="SystemFont" id="SystemFont_onrkg"]
+subpixel_positioning = 0
+
+[node name="PlayerNoMask" type="CharacterBody2D"]
+script = ExtResource("1_c1ry6")
+
+[node name="Anim" type="Sprite2D" parent="."]
+position = Vector2(140.65556, 233.64803)
+scale = Vector2(1.1693202, 1.2613091)
+texture = ExtResource("2_ec3xn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(145.4375, 236.375)
+shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="NomePlayer" type="Label" parent="." groups=["player"]]
+offset_left = 41.0
+offset_top = 72.0
+offset_right = 137.0
+offset_bottom = 88.0
+theme_override_fonts/font = SubResource("SystemFont_onrkg")
+theme_override_font_sizes/font_size = 10
