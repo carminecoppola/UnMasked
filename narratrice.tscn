@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://culwmrujmjwcb"]
+
+[ext_resource type="Script" uid="uid://bsoqehy3pwbc2" path="res://narratrice.gd" id="1_8iomx"]
+[ext_resource type="Texture2D" uid="uid://ctw6gkgb8tgrm" path="res://foto/personaggi/narratrice.png" id="9_duglr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l64hl"]
+size = Vector2(156.5, 290.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v7lw1"]
+radius = 155.00322
+
+[node name="Narratrice" type="Node2D"]
+script = ExtResource("1_8iomx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-13, 184)
+shape = SubResource("RectangleShape2D_l64hl")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-7, 184)
+shape = SubResource("CircleShape2D_v7lw1")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Visual"]
+offset_left = -92.0
+offset_top = -48.0
+offset_right = 78.0
+offset_bottom = -25.0
+text = "Premi E per interagire"
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+position = Vector2(-10.500008, 177.65974)
+scale = Vector2(0.39166662, 0.39166662)
+texture = ExtResource("9_duglr")

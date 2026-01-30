@@ -1,56 +1,61 @@
 extends Node2D
 
-# 6 vignette SOLO narratrice a destra
-@export var narratrice_vignette: Array[Texture2D] = []
+@onready var player_node: Node = get_node_or_null("PlayerNoMask")   # ✅ player vero
+@onready var narratrice_node: Node = get_node_or_null("NarratriceStatic")
+@onready var victory_image: TextureRect = get_node_or_null("VictoryImage")
 
-@onready var player_static: Node = $PlayerStatic
-@onready var narratrice_static: Node = $NarratriceStatic
-@onready var victory_image: TextureRect = $VictoryImage
-@onready var layer: VignetteLayer = $VignetteLayer
+@onready var narratrice_monologo: Node = get_node_or_null("Narratrice") # nodo con script monologo
 
 
 func _ready() -> void:
-	# stato iniziale
-	victory_image.visible = false
+	# vittoria inizialmente nascosta
+	if victory_image:
+		victory_image.visible = false
+		victory_image.modulate.a = 0.0
+	else:
+		push_error("Manca nodo VictoryImage")
 
-	# collega fine dialogo
-	if not layer.is_connected("dialogue_finished", Callable(self, "_on_dialogue_finished")):
-		layer.connect("dialogue_finished", Callable(self, "_on_dialogue_finished"))
-
-	_start_dialogue()
-
-
-func _start_dialogue() -> void:
-	if narratrice_vignette.is_empty():
-		push_error("win-scene: narratrice_vignette è vuoto. Metti 6 PNG in Inspector.")
-		_on_dialogue_finished() # fallback: mostra vittoria comunque
-		return
-
-	var seq: Array[VignetteLayer.Vignetta] = []
-	for tex in narratrice_vignette:
-		if tex:
-			seq.append(VignetteLayer.Vignetta.new(tex, "right"))
-
-	layer.choice_at_index = -1
-	layer.vignette = seq
-	layer.start()
+	# collega fine monologo
+	if narratrice_monologo and narratrice_monologo.has_signal("monologue_finished"):
+		narratrice_monologo.connect("monologue_finished", Callable(self, "_on_monologue_finished"))
+	else:
+		push_error("Nodo Narratrice non trovato o non ha il segnale monologue_finished.")
 
 
-func _on_dialogue_finished() -> void:
-	# spariscono player e narratrice
-	if is_instance_valid(player_static):
-		player_static.queue_free()
-	if is_instance_valid(narratrice_static):
-		narratrice_static.queue_free()
+func _on_monologue_finished() -> void:
+	# ✅ sparisce player
+	await _fade_out_and_free(player_node, 0.35)
 
+	# ✅ sparisce narratrice
+	await _fade_out_and_free(narratrice_node, 0.35)
+
+	# poi appare vittoria
 	_show_victory()
 
 
 func _show_victory() -> void:
+	if not victory_image:
+		return
+
 	victory_image.visible = true
-	victory_image.modulate.a = 0.0   # parte trasparente
+	victory_image.modulate.a = 0.0
 
 	var tween := create_tween()
 	tween.tween_property(victory_image, "modulate:a", 1.0, 2.0) \
 		.set_trans(Tween.TRANS_SINE) \
 		.set_ease(Tween.EASE_IN_OUT)
+
+
+func _fade_out_and_free(n: Node, duration: float) -> void:
+	if not is_instance_valid(n):
+		return
+
+	var canvas_item := n as CanvasItem
+	if canvas_item:
+		var t := create_tween()
+		t.tween_property(canvas_item, "modulate:a", 0.0, duration) \
+			.set_trans(Tween.TRANS_SINE) \
+			.set_ease(Tween.EASE_IN_OUT)
+		await t.finished
+
+	n.queue_free()
