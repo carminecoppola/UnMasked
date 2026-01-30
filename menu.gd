@@ -31,4 +31,5 @@ func _on_gioca_pressed():
 		return 
 		
 	Global.player_id = nome_inserito
-	Transizione.cambia_scena("res://principale.tscn")
+	Transizione.cambia_scena("res://transizione_dialogo.tscn")
+	#Transizione.cambia_scena("res://principale.tscn")

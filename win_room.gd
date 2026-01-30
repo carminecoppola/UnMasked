@@ -8,6 +8,12 @@ extends Node2D
 
 
 func _ready() -> void:
+	# blocca fisica e input del player in win-room
+	if player_node:
+		player_node.set_physics_process(false)
+		player_node.set_process_input(false)
+		player_node.set_process_unhandled_input(false)
+	
 	# vittoria inizialmente nascosta
 	if victory_image:
 		victory_image.visible = false

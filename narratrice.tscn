@@ -27,6 +27,7 @@ shape = SubResource("CircleShape2D_v7lw1")
 [node name="Visual" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="Visual"]
+visible = false
 offset_left = -92.0
 offset_top = -48.0
 offset_right = 78.0

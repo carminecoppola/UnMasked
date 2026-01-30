@@ -41,7 +41,7 @@ grow_vertical = 2
 color = Color(0.76862746, 0.76862746, 0.76862746, 1)
 
 [node name="PlayerNoMask" parent="." instance=ExtResource("1_7536u")]
-position = Vector2(-23, 298)
+position = Vector2(150, 533)
 
 [node name="Narratrice" parent="." instance=ExtResource("2_2awec")]
 position = Vector2(401, 351)

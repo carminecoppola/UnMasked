@@ -1,0 +1,33 @@
+[gd_scene load_steps=13 format=3 uid="uid://gcb27qwkrmms"]
+
+[ext_resource type="PackedScene" uid="uid://dh1onwxmh546s" path="res://player-no-mask.tscn" id="1_b478a"]
+[ext_resource type="PackedScene" uid="uid://culwmrujmjwcb" path="res://narratrice.tscn" id="2_tsv48"]
+[ext_resource type="PackedScene" uid="uid://cobnafej8dvum" path="res://vignette_layer.tscn" id="3_fcwkn"]
+[ext_resource type="Script" uid="uid://bmwhngv72juog" path="res://narratrice_transizione.gd" id="3_tsv48"]
+[ext_resource type="Texture2D" uid="uid://kdvfj2qw241h" path="res://foto/dialoghi/Narratrice-Iniziale/Narratore 2.png" id="4_gka5o"]
+[ext_resource type="Texture2D" uid="uid://ckva76mdlejss" path="res://foto/dialoghi/Narratrice-Iniziale/Narratore 3.png" id="5_1b60a"]
+[ext_resource type="Texture2D" uid="uid://c887gwvyd3t1x" path="res://foto/dialoghi/Narratrice-Iniziale/Narratore.png" id="6_twslq"]
+[ext_resource type="Texture2D" uid="uid://gxifxji7lkka" path="res://foto/dialoghi/Narratrice-Iniziale/Giocatore.png" id="7_pk0oh"]
+[ext_resource type="Texture2D" uid="uid://dlib2aixunbkl" path="res://foto/dialoghi/Narratrice-Iniziale/Narratore 4.png" id="8_qtmc0"]
+[ext_resource type="Texture2D" uid="uid://cj0gnfd28h052" path="res://foto/dialoghi/Narratrice-Iniziale/Narratore 5.png" id="9_xg6fw"]
+[ext_resource type="Texture2D" uid="uid://i6728snyud8a" path="res://foto/dialoghi/Narratrice-Iniziale/Group 3.png" id="10_l8b34"]
+[ext_resource type="Script" uid="uid://d0ekgmf75338l" path="res://player_no_mask_transizione.gd" id="11_1b60a"]
+
+[node name="TransizioneDialogo" type="Node2D"]
+
+[node name="Narratrice" parent="." instance=ExtResource("2_tsv48")]
+position = Vector2(995, 353)
+script = ExtResource("3_tsv48")
+narratrice_pre = Array[Texture2D]([ExtResource("4_gka5o"), ExtResource("5_1b60a"), ExtResource("6_twslq")])
+player_one = ExtResource("7_pk0oh")
+narratrice_post = Array[Texture2D]([ExtResource("8_qtmc0"), ExtResource("9_xg6fw"), ExtResource("10_l8b34")])
+main_scene_path = "res://principale.tscn"
+fade_time = 0.35
+
+[node name="PlayerNoMask" parent="." instance=ExtResource("1_b478a")]
+z_index = 1
+position = Vector2(297, 531)
+disable_mode = 1
+script = ExtResource("11_1b60a")
+
+[node name="VignetteLayer" parent="." instance=ExtResource("3_fcwkn")]
