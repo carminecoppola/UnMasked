@@ -2,8 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://blwexso7exvjo" path="res://foto/af4023b0-3fad-449f-a2f8-b1d4dcff0612.jpg" id="1_hbldq"]
 [ext_resource type="PackedScene" uid="uid://b8s66cm7s8uk4" path="res://uomo_ricco.tscn" id="2_64d67"]
+[ext_resource type="Texture2D" uid="uid://dlu2n7604qoaq" path="res://foto/oggetti/door-white.png" id="3_gacdo"]
 [ext_resource type="Script" uid="uid://6i4at1jntew" path="res://doorfinale.gd" id="3_hbldq"]
 [ext_resource type="Script" uid="uid://bbc0rkhbscyj4" path="res://uscita.gd" id="4_64d67"]
+[ext_resource type="Texture2D" uid="uid://bwpw13eqo3pcw" path="res://foto/oggetti/door-white-open.png" id="4_m8nmb"]
 [ext_resource type="PackedScene" uid="uid://cobnafej8dvum" path="res://vignette_layer.tscn" id="5_w4621"]
 [ext_resource type="PackedScene" path="res://npc-vip1.tscn" id="6_w4621"]
 [ext_resource type="PackedScene" path="res://npc-vip2.tscn" id="7_n6kms"]
@@ -114,12 +116,11 @@ offset_right = 1935.0
 offset_bottom = 691.0
 color = Color(1, 0, 0, 1)
 
-[node name="UomoRicco" parent="." unique_id=517502833 groups=["player"] instance=ExtResource("2_64d67")]
-position = Vector2(120, 570)
-
 [node name="DoorFinale" type="StaticBody2D" parent="." unique_id=891970570]
 position = Vector2(-11, 0)
 script = ExtResource("3_hbldq")
+immagine_chiusa = ExtResource("3_gacdo")
+immagine_aperta = ExtResource("4_m8nmb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorFinale" unique_id=1149284003]
 position = Vector2(1295, 566.875)
@@ -140,6 +141,14 @@ position = Vector2(0, 3)
 position = Vector2(1281, 578.00006)
 scale = Vector2(15, 15)
 shape = SubResource("CircleShape2D_s7sie")
+
+[node name="Sprite2D" type="Sprite2D" parent="DoorFinale" unique_id=464693711]
+position = Vector2(1228, 522.716)
+scale = Vector2(0.395, 0.395)
+texture = ExtResource("3_gacdo")
+
+[node name="UomoRicco" parent="." unique_id=517502833 groups=["player"] instance=ExtResource("2_64d67")]
+position = Vector2(120, 570)
 
 [node name="UscitaLavoro" type="Area2D" parent="." unique_id=646166683]
 script = ExtResource("4_64d67")
@@ -174,3 +183,6 @@ npc_dialogue_3 = ExtResource("19_m8nmb")
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1993461317]
 stream = ExtResource("20_0stda")
+
+[connection signal="body_entered" from="DoorFinale/Area2D" to="DoorFinale" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="DoorFinale/Area2D" to="DoorFinale" method="_on_area_2d_body_exited"]

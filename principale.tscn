@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://cx2js31vb6sr6" path="res://porta.gd" id="2_lqnig"]
 [ext_resource type="Script" uid="uid://bbc0rkhbscyj4" path="res://uscita.gd" id="4_y8vr8"]
 [ext_resource type="PackedScene" uid="uid://cobnafej8dvum" path="res://vignette_layer.tscn" id="5_l7e1w"]
+[ext_resource type="Texture2D" uid="uid://b0vvo65fp8soy" path="res://foto/oggetti/image 42.png" id="5_y7ofd"]
+[ext_resource type="Texture2D" uid="uid://3w2fufqykuqw" path="res://foto/oggetti/image 41.png" id="6_fysqj"]
 [ext_resource type="PackedScene" uid="uid://ce23hm1kw667y" path="res://npc.tscn" id="7_wcxb6"]
 [ext_resource type="PackedScene" uid="uid://cqwy0ewfwyb5w" path="res://npc2.tscn" id="8_o7g6j"]
 [ext_resource type="Script" uid="uid://c2f80ngnd2v46" path="res://npc_2.gd" id="9_qogae"]
@@ -114,20 +116,18 @@ offset_right = 1935.0
 offset_bottom = 691.0
 color = Color(1, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=1062927999 instance=ExtResource("1_41ae2")]
-position = Vector2(-44, 560)
-scale = Vector2(2, 2)
-speed = 400.0
-
 [node name="Porta" type="StaticBody2D" parent="." unique_id=261986668]
 position = Vector2(-11, 0)
 script = ExtResource("2_lqnig")
+immagine_chiusa = ExtResource("5_y7ofd")
+immagine_aperta = ExtResource("6_fysqj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Porta" unique_id=1124172147]
 position = Vector2(1295, 566.875)
 shape = SubResource("RectangleShape2D_l7e1w")
 
 [node name="ColorRect" type="ColorRect" parent="Porta" unique_id=1258653165]
+visible = false
 offset_left = 1265.0
 offset_top = 430.0
 offset_right = 1305.0
@@ -142,6 +142,16 @@ position = Vector2(0, 3)
 position = Vector2(1295.0001, 564)
 scale = Vector2(15, 15)
 shape = SubResource("CircleShape2D_s7sie")
+
+[node name="Sprite2D" type="Sprite2D" parent="Porta" unique_id=95370704]
+position = Vector2(1187, 559.00006)
+scale = Vector2(0.323, 0.323)
+texture = ExtResource("5_y7ofd")
+
+[node name="Player" parent="." unique_id=1062927999 instance=ExtResource("1_41ae2")]
+position = Vector2(-44, 560)
+scale = Vector2(2, 2)
+speed = 400.0
 
 [node name="Uscita" type="Area2D" parent="." unique_id=187342272]
 script = ExtResource("4_y8vr8")
@@ -175,3 +185,6 @@ complete_3 = ExtResource("18_t7ekq")
 
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1837654753]
 stream = ExtResource("19_l0rxg")
+
+[connection signal="body_entered" from="Porta/Area2D" to="Porta" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Porta/Area2D" to="Porta" method="_on_area_2d_body_exited"]

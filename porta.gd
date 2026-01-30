@@ -1,39 +1,44 @@
 extends StaticBody2D
 
+# Queste due caselle appariranno a destra nell'Inspector
+@export var immagine_chiusa : Texture2D
+@export var immagine_aperta : Texture2D
+
+# Riferimenti ai nodi (devono chiamarsi così nella lista a sinistra!)
+@onready var sprite = $Sprite2D
+@onready var muro = $CollisionShape2D
+
 var giocatore_vicino = false
-var aperta = false
-var posizione_chiusa : Vector2
-# Sposta la porta di 100 pixel a destra (o cambia i numeri come vuoi tu)
-var spostamento = Vector2(100, 0) 
+var is_aperta = false
 
 func _ready():
-	posizione_chiusa = position
-	# Collegamento automatico
-	if has_node("Area2D"):
-		$Area2D.body_entered.connect(_on_area_entered)
-		$Area2D.body_exited.connect(_on_area_exited)
+	# All'inizio mette l'immagine chiusa
+	if immagine_chiusa != null:
+		sprite.texture = immagine_chiusa
 
 func _process(delta):
-	# Se premi E, la porta si apre
+	# Se premi E (e sei vicino)
 	if giocatore_vicino and Input.is_action_just_pressed("interact"):
-		apri_chiudi()
+		cambia_stato()
 
-func apri_chiudi():
-	var tween = create_tween()
-	if aperta:
-		# Chiudi
-		tween.tween_property(self, "position", posizione_chiusa, 0.5)
-		aperta = false
+func cambia_stato():
+	if is_aperta:
+		# --- CHIUDI ---
+		sprite.texture = immagine_chiusa
+		muro.set_deferred("disabled", false) # Muro SOLIDO
+		is_aperta = false
 	else:
-		# Apri
-		tween.tween_property(self, "position", posizione_chiusa + spostamento, 0.5)
-		aperta = true
+		# --- APRI ---
+		sprite.texture = immagine_aperta
+		muro.set_deferred("disabled", true) # Muro INVISIBILE (puoi passare)
+		is_aperta = true
 
-# --- SEGNALI ---
-func _on_area_entered(body):
-	if body.name == "Player":
+# --- SEGNALI AREA 2D ---
+# Collega questi segnali dal nodo Area2D -> Inspector -> Node -> Signals
+func _on_area_2d_body_entered(body):
+	if body.name == "UomoRicco" or body.name == "Player":
 		giocatore_vicino = true
 
-func _on_area_exited(body):
-	if body.name == "Player":
+func _on_area_2d_body_exited(body):
+	if body.name == "UomoRicco" or body.name == "Player":
 		giocatore_vicino = false
