@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 func cambia_scena(percorso_nuova_scena):
+	print("Demone")
 	# 1. LO SCHERMO DIVENTA NERO
 	$AnimationPlayer.play("dissolvenza")
 	await $AnimationPlayer.animation_finished
@@ -40,3 +41,4 @@ func cambia_scena(percorso_nuova_scena):
 	
 	# 6. LO SCHERMO TORNA CHIARO
 	$AnimationPlayer.play_backwards("dissolvenza")
+	print("DemoneFinito")

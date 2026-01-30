@@ -37,10 +37,10 @@ size = Vector2(157.5, 274.5)
 script = ExtResource("1_4a7ct")
 
 [node name="AnimUomoRicco" type="AnimatedSprite2D" parent="."]
-position = Vector2(9.274986, 4.2499957)
-scale = Vector2(0.37069452, 0.3807854)
+position = Vector2(0, -1)
+scale = Vector2(0.4, 0.411)
 sprite_frames = SubResource("SpriteFrames_4a7ct")
-animation = &"idle_ricchione"
+animation = &"walk_uomo_ricco"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(5.25, 6.75)
