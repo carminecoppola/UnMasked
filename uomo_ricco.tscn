@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8s66cm7s8uk4"]
+[gd_scene format=3 uid="uid://b8s66cm7s8uk4"]
 
 [ext_resource type="Script" uid="uid://tfyntrbnb43q" path="res://player_ricco.gd" id="1_4a7ct"]
 [ext_resource type="Texture2D" uid="uid://b8gkcu6fpcyan" path="res://foto/personaggi/player-vip/image 43.png" id="2_4a7ct"]
@@ -31,22 +31,22 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7ct"]
-size = Vector2(157.5, 274.5)
+size = Vector2(140.5, 275)
 
-[node name="UomoRicco" type="CharacterBody2D"]
+[node name="UomoRicco" type="CharacterBody2D" unique_id=680131962]
 script = ExtResource("1_4a7ct")
 
-[node name="AnimUomoRicco" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -1)
-scale = Vector2(0.4, 0.411)
+[node name="AnimUomoRicco" type="AnimatedSprite2D" parent="." unique_id=1107607908]
+position = Vector2(-1.3000001, 1.260751)
+scale = Vector2(0.3906475, 0.4046585)
 sprite_frames = SubResource("SpriteFrames_4a7ct")
-animation = &"walk_uomo_ricco"
+animation = &"idle_ricchione"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5.25, 6.75)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1680507030]
+position = Vector2(-3.25, 6.5)
 shape = SubResource("RectangleShape2D_4a7ct")
 
-[node name="NomeUomoRicco" type="Label" parent="."]
+[node name="NomeUomoRicco" type="Label" parent="." unique_id=1171785547]
 offset_left = 599.0
 offset_top = 401.0
 offset_right = 776.0

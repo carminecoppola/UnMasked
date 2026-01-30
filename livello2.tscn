@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4oe32qvdyxk7"]
 
-[ext_resource type="Texture2D" uid="uid://cpxhinx4b5os0" path="res://foto/image 4.png" id="1_64d67"]
+[ext_resource type="Texture2D" uid="uid://blwexso7exvjo" path="res://foto/af4023b0-3fad-449f-a2f8-b1d4dcff0612.jpg" id="1_hbldq"]
 [ext_resource type="PackedScene" uid="uid://b8s66cm7s8uk4" path="res://uomo_ricco.tscn" id="2_64d67"]
 [ext_resource type="Script" uid="uid://6i4at1jntew" path="res://doorfinale.gd" id="3_hbldq"]
 [ext_resource type="Script" uid="uid://bbc0rkhbscyj4" path="res://uscita.gd" id="4_64d67"]
@@ -29,7 +29,7 @@ size = Vector2(1930, 57.5)
 size = Vector2(56.5, 740)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7sie"]
-size = Vector2(17, 437.25)
+size = Vector2(17, 398)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l7e1w"]
 size = Vector2(20, 239.75)
@@ -44,7 +44,7 @@ size = Vector2(169, 288)
 [node name="sfondo" type="Sprite2D" parent="." unique_id=645857697]
 position = Vector2(639.2451, 359.00003)
 scale = Vector2(0.99883115, 0.9972222)
-texture = ExtResource("1_64d67")
+texture = ExtResource("1_hbldq")
 
 [node name="Mura" type="StaticBody2D" parent="." unique_id=1790310000]
 physics_material_override = SubResource("PhysicsMaterial_41ae2")
@@ -92,7 +92,7 @@ offset_bottom = 29.0
 color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mura" unique_id=638120583]
-position = Vector2(1285.5, 211.375)
+position = Vector2(1285.5, 176)
 shape = SubResource("RectangleShape2D_s7sie")
 
 [node name="ColorRect" type="ColorRect" parent="Mura" unique_id=1209192299]
