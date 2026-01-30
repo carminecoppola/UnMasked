@@ -5,6 +5,7 @@ extends Node2D
 
 func _ready():
 	npc2.visible = false
+
 	npc2.process_mode = Node.PROCESS_MODE_DISABLED
 
 	npc1.npc_finished.connect(_on_npc1_finished)
